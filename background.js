@@ -1,0 +1,18 @@
+﻿chrome.extension.onMessage.addListener(
+function(request,sender,sendResponse)
+{	
+	console.log(request);
+	if(request['im']&&request['note']){
+	chrome.storage.local.get('vkndata',function(e){					
+			e['vkndata'].push(request); 
+			console.log(e['vkndata']);
+			chrome.storage.local.set({'vkndata':e['vkndata']});		
+	});
+	}else{
+		console.log(123);
+		chrome.storage.local.get('vkndata',function(e){					
+			sendResponse(e['vkndata']);	
+		});
+	}
+}
+);
